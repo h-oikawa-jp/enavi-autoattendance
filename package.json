@@ -1,0 +1,12 @@
+{
+  "name": "enavi-autoattendance",
+  "version": "0.1.0",
+  "description": "",
+  "main": "app.js",
+  "dependencies": {
+    "nightmare": "^2.10.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.1.0"
+  }
+}
