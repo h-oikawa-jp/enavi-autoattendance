@@ -1,0 +1,10 @@
+nightmare:
+  show: false
+
+enavi:
+  loginUrl: "https://www.enavi-sv.net/ts-s-staff/Staff/login.aspx?ID=XXXXXXXXX"
+  staffNo: "no"
+  password: "password"
+
+log4js:
+  level: info
