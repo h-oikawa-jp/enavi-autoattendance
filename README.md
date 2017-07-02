@@ -32,10 +32,11 @@ Create your setting file: `config/{your-env-name}.yml` (or Modify `default.yml`)
 
  and write below values with your account.
 
-```javascript
-const loginUrl = 'https://www.enavi-sv.net/ts-s-staff/Staff/login.aspx?ID=xxxxxxxxx';
-const staffNo = 'no';
-const password = 'password';
+```yaml
+enavi:
+  loginUrl: "https://www.enavi-sv.net/ts-s-staff/Staff/login.aspx?ID=XXXXXXXXX"
+  staffNo: "no"
+  password: "password"
 ```
 
 ## Run
