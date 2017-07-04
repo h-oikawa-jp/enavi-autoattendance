@@ -53,7 +53,8 @@ function approvalRequest(nightmare, topUrl) {
         // Disable the confirming of approval request by onClick attr
         .evaluate(() => document.querySelector('input#BtnOk').setAttribute('onClick', 'return true;'))
         .click('input#BtnOk')
-        .evaluate(() => document.querySelector('span#LblRegTime').textContent);
+        .wait('span#LblMessage')
+        .evaluate(selector => document.querySelector(selector).textContent);
 }
 
 /**
