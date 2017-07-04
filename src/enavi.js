@@ -49,9 +49,8 @@ logger.debug(`Nightmare options: ${JSON.stringify(nightmare.options)}`);
 /**
  * Run main tasks processes (in sequential)
  */
-const co = require('co');
-co(function *(){
-    const topUrl = onSuccess('login: ', yield Task.login(nightmare, config));
+(async () => {
+    const topUrl = onSuccess('login: ', await Task.login(nightmare, config));
 
     for (const task of tasks) {
         let promise;
@@ -61,13 +60,13 @@ co(function *(){
             case 'approvalRequest': promise = Task.approvalRequest(nightmare, topUrl); break;
             default : throw new Error(`Undefined task: [${task}]`);
         }
-        onSuccess(`${task}: `, yield promise );
+        onSuccess(`${task}: `, await promise );
     }
 
-    const result = onSuccess('getTimes: ', yield Task.getTimes(nightmare, topUrl));
-    onSuccess('logout: ', yield Task.logout(nightmare));
+    const result = onSuccess('getTimes: ', await Task.getTimes(nightmare, topUrl));
+    onSuccess('logout: ', await Task.logout(nightmare));
     return result;
-}).catch(onError);
+})().catch(onError);
 
 function onSuccess(message, result) {
     logger.info(message, result);
