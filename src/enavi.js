@@ -34,14 +34,14 @@ const Nightmare = require('nightmare');
 /**
  * Run main tasks processes (in sequential)
  */
-async function main(config) {
+async function main(config, callback) {
     if (config.has('log4js.level')) logger.setLevel(config.get('log4js.level'));
 
     logger.info('Configuration Env: ' + config.util.getEnv('NODE_ENV'));
-    logger.info(config);
-    logger.debug(program);
+    logger.info(JSON.stringify(config));
+    logger.debug(JSON.stringify(program));
 
-    let result;
+    let result, error;
     const nightmare = Nightmare(config.nightmare);
     try {
         logger.debug(`Nightmare options: ${JSON.stringify(nightmare.options)}`);
@@ -61,11 +61,11 @@ async function main(config) {
         }
 
         onSuccess('logout: ', await Task.logout(nightmare));
-    } catch (error) {
-        result = onError(error);
-        nightmare.halt(error, logger.warn("Nightmare is halted"));
+    } catch (err) {
+        nightmare.halt(err, logger.warn("Nightmare is halted"));
+        error = err;
     }
-    return result;
+    callback(error, result);
 }
 
 function onSuccess(message, result) {
@@ -73,9 +73,5 @@ function onSuccess(message, result) {
     return result;
 }
 
-function onError(err) {
-    logger.error(err);
-    return err;
-}
 
 exports.main = main;

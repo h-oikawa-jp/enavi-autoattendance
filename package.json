@@ -3,6 +3,7 @@
   "version": "0.1.1",
   "description": "",
   "dependencies": {
+    "async": "^2.5.0",
     "babel-runtime": "^6.23.0",
     "commander": "^2.10.0",
     "config": "^1.26.1",
