@@ -41,7 +41,11 @@ export const enaviTask = (event, context, callback) => {
       response.body = JSON.stringify(results);
     }
 
+    logger.info(`response = ${JSON.stringify(response)}`);
     callback(error, response);
+  });
+  loopSleep(15, 1000, i => {
+    logger.info(`loopSleep = ${i}`);
   });
 }
 
@@ -53,4 +57,23 @@ class Response{
     };
     this.body = "{}";
   }
+}
+
+function loopSleep(_loopLimit,_interval, _mainFunc){
+  var loopLimit = _loopLimit;
+  var interval = _interval;
+  var mainFunc = _mainFunc;
+  var i = 0;
+  var loopFunc = function () {
+    var result = mainFunc(i);
+    if (result === false) {
+      // break機能
+      return;
+    }
+    i = i + 1;
+    if (i < loopLimit) {
+      setTimeout(loopFunc, interval);
+    }
+  }
+  loopFunc();
 }
