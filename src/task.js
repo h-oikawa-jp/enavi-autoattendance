@@ -17,7 +17,7 @@ function login(nightmare, config) {
         .insert('#TextPassword', config.enavi.password)
         .click('input#BtnOk')
         .wait('span#LblNowTime')
-        .url()
+        .url();
 }
 
 /**
