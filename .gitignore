@@ -131,7 +131,9 @@ fabric.properties
 .idea/sonarlint
 
 dist/
+config/
 
 # Serverless directories
 .serverless
 
+.webpack/

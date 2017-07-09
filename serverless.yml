@@ -22,8 +22,8 @@ provider:
   runtime: nodejs6.10
 
 # you can overwrite defaults here
-#  stage: dev
-#  region: us-east-1
+  stage: dev
+  region: ${env:AWS_REGION}
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -55,8 +55,13 @@ provider:
 #    - exclude-me-dir/**
 
 functions:
-  hello:
-    handler: handler.hello
+  enavi:
+    handler: lambda-handler.enaviTask
+    events:
+       - http:
+           path: enavi
+           method: post
+           cors: true
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -101,3 +106,16 @@ functions:
 #     NewOutput:
 #       Description: "Description for the output"
 #       Value: "Some output value"
+
+plugins:
+  # https://github.com/elastic-coders/serverless-webpack
+  - serverless-webpack
+  - serverless-offline
+
+custom:
+  webpackIncludeModules: true # enable auto-packing of external modules
+  # webpackIncludeModules:
+    # packagePath: '../package.json' # relative path to custom package.json file.
+  serverless-offline:
+    babelOptions:
+      presets: ["latest"]

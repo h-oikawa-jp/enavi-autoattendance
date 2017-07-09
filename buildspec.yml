@@ -1,0 +1,14 @@
+version: 0.1
+
+phases:
+  install:
+    commands:
+      - echo update started on `date`
+      - apt-get update -y
+      - echo install started on `date`
+      - npm i -g serverless
+      - npm i
+  build:
+    commands:
+      - echo build started on `date`
+      - sls deploy
