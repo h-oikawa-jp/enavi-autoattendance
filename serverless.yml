@@ -19,12 +19,14 @@ service: enavi-autoattendance
 
 provider:
   name: aws
-  runtime: nodejs6.10
-
+  runtime: nodejs4.3
+  memorySize: 128
+  timeout: 20s
 # you can overwrite defaults here
   stage: dev
   # region: ${env:AWS_REGION}
-  region: ap-northeast-1
+  # region: ap-northeast-1
+  region: eu-west-1
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -58,7 +60,8 @@ provider:
 
 functions:
   enavi:
-    handler: lambda-handler.enaviTask
+    handler: lambda-handler.handler
+    # handler: lambda-handler.enaviTask
     events:
        - http:
            path: enavi

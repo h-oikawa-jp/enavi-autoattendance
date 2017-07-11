@@ -3,8 +3,8 @@ const nodeExternals = require('webpack-node-externals')
 const path = require('path');
 
 module.exports = {
-  // entry: './lambda-handler.js',
-  entry: './function.js',
+  entry: './lambda-handler.js',
+  // entry: './function.js',
   target: 'node',
   module: {
     loaders: [

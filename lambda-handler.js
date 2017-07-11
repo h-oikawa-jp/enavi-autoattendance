@@ -7,8 +7,34 @@ import config from 'config';
 import Common from "./src/common";
 import enavi from "./src/enavi";
 
-// const async = require('async');
 const logger = Common.logger;
+
+var binaryPack = require('./lib/bootstrap/nightmare-lambda-pack');
+var Xvfb = require('./lib/bootstrap/xvfb');
+
+var isOnLambda = binaryPack.isRunningOnLambdaEnvironment;
+var electronPath = binaryPack.installNightmareOnLambdaEnvironment();
+
+exports.handler = (event, context) => {
+  var xvfb = new Xvfb({
+    xvfb_executable: '/tmp/pck/Xvfb',  // Xvfb executable will be at this path when unpacked from nigthmare-lambda-pack
+    dry_run: !isOnLambda         // in local environment execute callback of .start() without actual execution of Xvfb (for running in dev environment)
+  });
+
+  xvfb.start((err, xvfbProcess) => {
+    if (err) context.done(err);
+
+    function done(err, result){
+      xvfb.stop((err) =>{
+        context.done(err, result);
+      });
+    }
+
+    enaviTask(event, context, done);
+
+  });
+};
+
 
 export const enaviTask = (event, context, callback) => {
   const response = new Response();
@@ -43,43 +69,6 @@ export const enaviTask = (event, context, callback) => {
       logger.info(`response = ${JSON.stringify(response)}`);
       callback(error, response);
     });
-/*
-  async.waterfall([
-    (callbackAsync) => {
-      logger.info("Merge request config");
-      const extendConfig = config.util.extendDeep(
-        config.util.cloneDeep(config),
-        JSON.parse(event.body)
-      );
-
-      if (extendConfig.has('log4js.level')) logger.setLevel(extendConfig.get('log4js.level'));
-      logger.info(`event: ${JSON.stringify(event)}`);
-      logger.info(`context: ${JSON.stringify(context)}`);
-
-      callbackAsync(null, extendConfig);
-    },
-    (extendConfig, callbackAsync) => {
-      const tasks = ["getTimes"]; //TODO:
-      enavi.main(tasks, extendConfig)
-        .then(result => callbackAsync(null, result))
-        .catch(err => callbackAsync(err));
-    }
-  ], (error, results) => {
-    if (error) {
-      logger.error(error);
-      response.statusCode = 500;
-      response.body = JSON.stringify(error);
-
-    } else {
-      logger.info(`result = ${JSON.stringify(results)}`);
-      response.statusCode = 202;
-      response.body = JSON.stringify(results);
-    }
-
-    logger.info(`response = ${JSON.stringify(response)}`);
-    callback(error, response);
-  });
-*/
   // Lambdaではメインプロセスが終了すると子プロセスも全てKillされる為、
   // メイン処理完了まで本プロセスをブロッキングする。
   let loop = true;
@@ -102,15 +91,15 @@ class Response{
 
 
 
-var https = require ('https');
-exports.enaviTask2 = function(event, context) {
-    https.get(JSON.parse(event.body).enavi.loginUrl, function(res) {
-        console.log("Got response: " + res.statusCode);
+// var https = require ('https');
+// exports.enaviTask2 = function(event, context) {
+//     https.get(JSON.parse(event.body).enavi.loginUrl, function(res) {
+//         console.log("Got response: " + res.statusCode);
 
-        res.on("data", function(chunk) {
-            context.done(null, chunk);
-        });
-    }).on('error', function(e) {
-        context.done('error', e);
-    });
-};
+//         res.on("data", function(chunk) {
+//             context.done(null, chunk);
+//         });
+//     }).on('error', function(e) {
+//         context.done('error', e);
+//     });
+// };
