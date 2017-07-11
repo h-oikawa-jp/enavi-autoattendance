@@ -1,16 +1,3 @@
-# Welcome to Serverless!
-#
-# This file is the main config file for your service.
-# It's very minimal at this point and uses default values.
-# You can always add more config options for more control.
-# We've included some commented out config examples here.
-# Just uncomment any of them to get that config option.
-#
-# For full config options, check the docs:
-#    docs.serverless.com
-#
-# Happy Coding!
-
 service: enavi-autoattendance
 
 # You can pin your service to only deploy with a specific Serverless version
@@ -18,13 +5,18 @@ service: enavi-autoattendance
 # frameworkVersion: "=X.X.X"
 
 provider:
-  name: aws
-  runtime: nodejs6.10
-
-# you can overwrite defaults here
-  stage: dev
-  # region: ${env:AWS_REGION}
-  region: ap-northeast-1
+  # name: aws
+  # runtime: nodejs6.10
+  # stage: dev
+  # # region: ${env:AWS_REGION}
+  # region: ap-northeast-1
+  name: google
+  runtime: nodejs
+  project: enavi-autoattendance
+  # the path to the credentials file needs to be absolute
+  credentials: keyfile.json
+  memorySize: 128
+  timeout: 10s
 
 # you can add statements to the Lambda function's IAM Role here
 #  iamRoleStatements:
@@ -46,24 +38,54 @@ provider:
 #  environment:
 #    variable1: value1
 
-# you can add packaging information here
-#package:
-#  include:
-#    - lambda/**
-#    - config/**
-#    - dist/**
-#  exclude:
-#    - exclude-me.js
-#    - exclude-me-dir/**
+# needs more granular excluding in production as only the serverless provider npm
+# package should be excluded (and not the whole node_modules directory)
+package:
+  # include:
+  #   - config/**
+  exclude:
+    - node_modules/**
+    - .gitignore
+    - .git/**
 
 functions:
-  enavi:
-    handler: lambda-handler.enaviTask
+  # enavi:
+  #   handler: lambda-handler.enaviTask
+  #   events:
+  #      - http:
+  #          path: enavi
+  #          method: post
+  #          cors: true
+  first:
+    handler: enaviTask
     events:
-       - http:
-           path: enavi
-           method: post
-           cors: true
+      - http: path
+
+
+
+  # NOTE: the following uses an "event" event (pubSub event in this case).
+  # Please create the corresponding resources in the Google Cloud
+  # before deploying this service through Serverless
+
+  #second:
+  #  handler: event
+  #  events:
+  #    - event:
+  #        eventType: providers/cloud.pubsub/eventTypes/topic.publish
+  #        resource: projects/*/topics/my-topic
+
+# you can define resources, templates etc. the same way you would in a
+# Google Cloud deployment configuration
+#resources:
+#  resources:
+#    - type: storage.v1.bucket
+#      name: my-serverless-service-bucket
+#  imports:
+#    - path: my_template.jinja
+
+
+
+
 
 #    The following are a few example events you can configure
 #    NOTE: Please make sure to change your handler code to work with those events
@@ -110,9 +132,10 @@ functions:
 #       Value: "Some output value"
 
 plugins:
+  - serverless-google-cloudfunctions
   # https://github.com/elastic-coders/serverless-webpack
   - serverless-webpack
-  - serverless-offline
+  # - serverless-offline
 
 custom:
   webpackIncludeModules: true # enable auto-packing of external modules

@@ -44,12 +44,12 @@ function main(tasks, config) {
     logger.debug(`Nightmare options: ${JSON.stringify(nightmare.options)}`);
 
     ////////////////////////////////////////////////////////////////////////////
-    return nightmare.goto(config.enavi.loginUrl)
+/*    return nightmare.goto(config.enavi.loginUrl)
         .catch(err => {
             logger.error("goto ERROR");
             logger.error(err);
-        });
-/*
+        });*/
+//
     let topUrl, result;
     return Task.login(nightmare, config)
         .then(url => {
@@ -81,7 +81,7 @@ function main(tasks, config) {
             nightmare.halt(err, logger.warn("Nightmare is halted"));
             throw err;
         });
-*/
+//
 }
 
 function onSuccess(message, result) {
