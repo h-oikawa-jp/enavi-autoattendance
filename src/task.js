@@ -54,7 +54,7 @@ function approvalRequest(nightmare, topUrl) {
         .evaluate(() => document.querySelector('input#BtnOk').setAttribute('onClick', 'return true;'))
         .click('input#BtnOk')
         .wait('span#LblMessage')
-        .evaluate(selector => document.querySelector(selector).textContent);
+        .evaluate(() => document.querySelector('span#LblMessage').textContent);
 }
 
 /**
