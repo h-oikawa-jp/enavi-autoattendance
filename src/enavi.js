@@ -53,19 +53,20 @@ const co = require('co');
 co(function *(){
     const topUrl = onSuccess('login: ', yield Task.login(nightmare, config));
 
+    let result;
     for (const task of tasks) {
         let promise;
         switch (task) {
             case 'workStart': promise = Task.workStart(nightmare, topUrl); break;
             case 'workEnd': promise = Task.workEnd(nightmare, topUrl); break;
             case 'approvalRequest': promise = Task.approvalRequest(nightmare, topUrl); break;
+            case 'getTimes': promise = Task.getTimes(nightmare, topUrl); break;
+            case 'logout': promise = Task.logout(nightmare); break;
             default : throw new Error(`Undefined task: [${task}]`);
         }
-        onSuccess(`${task}: `, yield promise );
+        result = onSuccess(`${task}: `, yield promise );
     }
 
-    const result = onSuccess('getTimes: ', yield Task.getTimes(nightmare, topUrl));
-    onSuccess('logout: ', yield Task.logout(nightmare));
     return result;
 }).catch(onError);
 

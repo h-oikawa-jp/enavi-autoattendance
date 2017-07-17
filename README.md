@@ -16,6 +16,8 @@ This will provide the following actions.
 |'workStart'|Goto top page, and Click the "出勤" button (if available).|
 |'workEnd'|Goto top page, and Click the "退勤" button (if available).|
 |'approvalRequest'|Click the "承認依頼" button (if available), and Send 'OK' to confirm of next page.|
+|'getTimes'|Get the times of "出勤/退勤" elements on the top page, and print them to console.|
+|'logout'|Click the "ログアウト" button and close window.|
 
 
 ## Setup

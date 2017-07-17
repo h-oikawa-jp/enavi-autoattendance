@@ -12,7 +12,7 @@ echo 勤怠入力を実行します。中止する場合はウィンドウを閉じてください。
 timeout 5
 
 
-call npm run enavi -- workEnd approvalRequest -e %USERNAME% >>%LOGFILE%
+call npm run enavi -- workEnd approvalRequest getTimes logout -s -e %USERNAME% >>%LOGFILE%
 type %LOGFILE%
 
 
