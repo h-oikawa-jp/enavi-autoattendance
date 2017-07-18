@@ -45,14 +45,13 @@ function workEnd(nightmare, topUrl) {
 /**
  * Approval Request
  */
-function approvalRequest(nightmare, topUrl) {
+function approvalRequest(nightmare, topUrl, config) {
+    const waitClickFor = (config.enavi.approvalRequest.manual) ? 'span#LblMessage' : 'input#BtnOk';
     return nightmare.goto(topUrl)
         .wait('#ImgBtnReport1')
         .click('#ImgBtnReport1')
-        .wait('input#BtnOk')
-        // Disable the confirming of approval request by onClick attr
-        .evaluate(() => document.querySelector('input#BtnOk').setAttribute('onClick', 'return true;'))
-        .click('input#BtnOk')
+        .wait(waitClickFor)
+        .click(waitClickFor)
         .wait('span#LblMessage')
         .evaluate(() => document.querySelector('span#LblMessage').textContent);
 }

@@ -59,7 +59,7 @@ co(function *(){
         switch (task) {
             case 'workStart': promise = Task.workStart(nightmare, topUrl); break;
             case 'workEnd': promise = Task.workEnd(nightmare, topUrl); break;
-            case 'approvalRequest': promise = Task.approvalRequest(nightmare, topUrl); break;
+            case 'approvalRequest': promise = Task.approvalRequest(nightmare, topUrl, config); break;
             case 'getTimes': promise = Task.getTimes(nightmare, topUrl); break;
             case 'logout': promise = Task.logout(nightmare); break;
             default : throw new Error(`Undefined task: [${task}]`);
