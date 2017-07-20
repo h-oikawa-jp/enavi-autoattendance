@@ -7,7 +7,6 @@ This will provide the following actions.
 1. Access to 'e-navi' login page.
 1. Login as staff using properties in `config/*.EXT`. (Supported file types depend on '[node-config](https://github.com/lorenwest/node-config)')
 1. Execute the tasks(#1) given to the commandline arguments sequentially.
-1. Get time of "出勤" & "退勤" fields.
 
 ### Selectable Tasks (#1)
 
@@ -63,7 +62,7 @@ $ npm run enavi -- workEnd approvalRequest --env your-env-name --show
 > node dist/enavi "-h"
  
  
-   Usage: enavi tasks... [options]  =>   tasks = [ login, workStart, workEnd, approvalRequest, getTimes, logout ] (separate with space)
+   Usage: enavi tasks... [options]  =>   tasks = [ workStart, workEnd, approvalRequest, getTimes, logout ] (separate with space)
  
    Options:
  

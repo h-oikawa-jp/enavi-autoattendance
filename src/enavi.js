@@ -6,8 +6,8 @@ import Task from "./task";
 // Parse command line options
 const program = require("commander");
 program
-    .version('0.1.1')
-    .usage(`tasks... [options]  =>   tasks = [ ${Object.keys(Task).join(", ")} ] (separate with space) `)
+    .version('0.1.2')
+    .usage(`tasks... [options]  =>   tasks = [ ${Object.keys(Task).filter((v) => v != 'login').join(", ")} ] (separate with space) `)
     .option('-s, --show', 'Flag of Showing GUI window')
     .option('-e, --env <env>', 'An Environment String (Load config file from [config/{env}.ext])')
     .parse(process.argv);
