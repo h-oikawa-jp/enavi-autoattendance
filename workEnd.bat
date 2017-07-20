@@ -1,14 +1,16 @@
 @echo off
 
+chcp 65001
+
 cd %~dp0
 
-rem ���O�t�H���_/�t�@�C�����𐶐�
+rem ログフォルダ/ファイル名を生成
 if not exist .log (mkdir .log)
 set YMD=%date:~0,4%%date:~5,2%%date:~8,2%
 set LOGFILE=.log\%~n0_%YMD%.log
 
 
-echo �Αӓ��͂����s���܂��B���~����ꍇ�̓E�B���h�E����Ă��������B
+echo 勤怠入力を実行します。中止する場合はウィンドウを閉じてください。
 timeout 5
 
 
@@ -16,13 +18,13 @@ call npm run enavi -- workEnd approvalRequest getTimes logout -s -e %USERNAME% >
 type %LOGFILE%
 
 
-echo ��莞�Ԍ�ɃV���b�g�_�E�����܂��B
+echo 一定時間後にシャットダウンします。
 shutdown /s /t 10
 
-choice /C:Q /M "�V���b�g�_�E���𒆎~����ꍇ��`Q`�L�[�������Ă��������B"
+choice /C:Q /M "シャットダウンを中止する場合は`Q`キーを押してください。"
 
 shutdown /a
-echo �V���b�g�_�E���𒆎~���܂����B
+echo シャットダウンを中止しました。
 
 
 pause
