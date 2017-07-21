@@ -1,18 +1,20 @@
 @echo off
 
+chcp 65001
+
 cd %~dp0
 
-rem ƒƒOƒtƒHƒ‹ƒ_/ƒtƒ@ƒCƒ‹–¼‚ð¶¬
+rem ãƒ­ã‚°ãƒ•ã‚©ãƒ«ãƒ€/ãƒ•ã‚¡ã‚¤ãƒ«åã‚’ç”Ÿæˆ
 if not exist .log (mkdir .log)
 set YMD=%date:~0,4%%date:~5,2%%date:~8,2%
 set LOGFILE=.log\%~n0_%YMD%.log
 
 
-echo ‹Î‘Ó“ü—Í‚ðŽÀs‚µ‚Ü‚·B’†Ž~‚·‚éê‡‚ÍƒEƒBƒ“ƒhƒE‚ð•Â‚¶‚Ä‚­‚¾‚³‚¢B
+echo å‹¤æ€ å…¥åŠ›ã‚’å®Ÿè¡Œã—ã¾ã™ã€‚ä¸­æ­¢ã™ã‚‹å ´åˆã¯ã‚¦ã‚£ãƒ³ãƒ‰ã‚¦ã‚’é–‰ã˜ã¦ãã ã•ã„ã€‚
 timeout 5
 
 
-call npm run enavi -- workStart -e %USERNAME% >>%LOGFILE%
+call npm run enavi -- workStart getTimes logout -s -e %USERNAME% >>%LOGFILE%
 type %LOGFILE%
 
 
