@@ -1,0 +1,85 @@
+{
+  "name": "enavi-autoattendance",
+  "version": "0.2.0",
+  "description": "enavi auto attendance by Headless Chrome",
+  "main": "index.js",
+  "repository": "https://github.com/tf-oikawa/enavi-autoattendance.git",
+  "author": "tf-oikawa <oikawa@techfun.jp>",
+  "license": "MIT",
+  "dependencies": {
+    "chromy": "^0.3.6",
+    "commander": "^2.11.0",
+    "config": "^1.26.1",
+    "js-yaml": "^3.9.0",
+    "log4js": "^2.3.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.25.0",
+    "babel-eslint": "^7.2.3",
+    "babel-loader": "^7.1.1",
+    "babel-plugin-transform-runtime": "^6.23.0",
+    "babel-polyfill": "^6.23.0",
+    "babel-preset-env": "^1.6.0",
+    "babel-preset-latest": "^6.24.1",
+    "babel-register": "^6.24.1",
+    "babel-runtime": "^6.23.0",
+    "eslint": "^4.3.0",
+    "eslint-config-airbnb-base": "^11.2.0",
+    "eslint-plugin-import": "^2.7.0",
+    "eslint-plugin-node": "^5.1.1",
+    "eslint-plugin-promise": "^3.5.0",
+    "webpack": "^3.3.0",
+    "webpack-node-externals": "^1.6.0"
+  },
+  "babel": {
+    "sourceMaps": "inline",
+    "plugins": [
+      "transform-runtime"
+    ],
+    "presets": [
+      [
+        "env",
+        {
+          "targets": {
+            "node": 6.1
+          }
+        }
+      ],
+      "stage-3"
+    ]
+  },
+  "eslintConfig": {
+    "parser": "babel-eslint",
+    "plugins": [
+      "import"
+    ],
+    "extends": [
+      "airbnb-base"
+    ],
+    "settings": {
+      "import/parser": "babel-eslint",
+      "import/resolve": {
+        "moduleDirectory": [
+          "node_modules",
+          "src",
+          "./"
+        ]
+      }
+    },
+    "rules": {
+      "no-console": 0,
+      "semi": [
+        "error",
+        "never"
+      ],
+      "comma-dangle": [
+        "error",
+        "always-multiline"
+      ],
+      "space-before-function-paren": [
+        "error",
+        "always"
+      ]
+    }
+  }
+}
