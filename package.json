@@ -3,6 +3,12 @@
   "version": "0.2.0",
   "description": "enavi auto attendance by Headless Chrome",
   "main": "index.js",
+  "engines": {
+    "node": ">= 6.10.0"
+  },
+  "config": {
+    "jsSrc": "src/"
+  },
   "repository": "https://github.com/tf-oikawa/enavi-autoattendance.git",
   "author": "tf-oikawa <oikawa@techfun.jp>",
   "license": "MIT",
@@ -20,7 +26,7 @@
     "babel-plugin-transform-runtime": "^6.23.0",
     "babel-polyfill": "^6.23.0",
     "babel-preset-env": "^1.6.0",
-    "babel-preset-latest": "^6.24.1",
+    "babel-preset-stage-3": "^6.24.1",
     "babel-register": "^6.24.1",
     "babel-runtime": "^6.23.0",
     "eslint": "^4.3.0",
@@ -28,8 +34,12 @@
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.1",
     "eslint-plugin-promise": "^3.5.0",
+    "exports-loader": "^0.6.4",
+    "file-loader": "^0.11.2",
+    "imports-loader": "^0.7.1",
     "webpack": "^3.3.0",
-    "webpack-node-externals": "^1.6.0"
+    "webpack-node-externals": "^1.6.0",
+    "yaml-loader": "^0.5.0"
   },
   "babel": {
     "sourceMaps": "inline",
@@ -41,7 +51,7 @@
         "env",
         {
           "targets": {
-            "node": 6.1
+            "node": 6.10
           }
         }
       ],
